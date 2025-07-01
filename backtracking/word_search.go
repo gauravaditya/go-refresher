@@ -1,5 +1,7 @@
 package backtracking
 
+// Given a grid of letters, identify if the given word exists in the grid
+
 func wordSearch(board [][]byte, word string) bool {
 
 	index := 0
