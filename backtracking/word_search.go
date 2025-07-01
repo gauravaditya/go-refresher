@@ -1,60 +1,52 @@
 package backtracking
 
-import (
-	"fmt"
-	"strings"
-)
-
 func wordSearch(board [][]byte, word string) bool {
-	var search func(path []byte, i, j int)
 
-	var result bool
+	index := 0
 
-	// delta := 1
+	var find func(i, j, index int) bool
 
-	search = func(path []byte, x, y int) {
-		if string(path) == word || result {
-			result = true
-			return
+	find = func(i, j, index int) bool {
+		if index == len(word) { // word found
+			return true
 		}
 
-		if x < 0 || y < 0 {
-			return
+		if i < 0 || j < 0 || i >= len(board) || j >= len(board[i]) {
+			return false
 		}
 
-		if !strings.HasPrefix(word, string(path)) {
-			return
+		if board[i][j] != word[index] { // not the letter we want
+			return false
 		}
 
-		delta := 1
-		visited := make(map[[2]int]bool)
+		curr := board[i][j]
+		board[i][j] = '#' // mark visited
 
-		fmt.Println("entering:", string(path))
-		for i := x; i < len(board); i++ {
-			for j := y; j < len(board[x]) && j >= 0; {
-				visited[[2]int{i, j}] = true
-				curr := board[i][j]
+		if find(i, j+1, index+1) {
+			return true
+		}
+		if find(i, j-1, index+1) {
+			return true
+		}
+		if find(i+1, j, index+1) {
+			return true
+		}
+		if find(i-1, j, index+1) {
+			return true
+		}
 
-				fmt.Printf("adding: [%d,%d], val: %s\n", i, j, string(curr))
-				path = append(path, board[i][j])
+		board[i][j] = curr // restore visited
 
-				j += delta
-				search(path, i, j)
+		return false
+	}
 
-				if !strings.HasPrefix(word, string(path)) {
-					fmt.Printf("removing: [%d,%d], val: %s\n", i, j, string(curr))
-					path = path[:len(path)-1]
-				}
-
-				if visited[[2]int{i, j}] {
-					continue
-				} else {
-					delta *= -1
-				}
+	for i := 0; i < len(board); i++ {
+		for j := 0; j < len(board[i]); j++ {
+			if find(i, j, index) {
+				return true
 			}
 		}
 	}
 
-	search([]byte{}, 0, 0)
-	return result
+	return false
 }
