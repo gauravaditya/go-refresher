@@ -24,12 +24,10 @@ func findWords(board [][]byte, words []string) []string {
 		}
 
 		fmt.Println("current item: ->", string(board[i][j]))
-		if !node.StartsWith(string(current)) {
+		letter := rune(board[i][j])
+		nextNode, ok := node.Next[letter]
+		if !ok {
 			return
-		}
-
-		if node.Search(string(current)) {
-			found[string(current)] = string(current)
 		}
 
 		temp := board[i][j]
@@ -37,11 +35,15 @@ func findWords(board [][]byte, words []string) []string {
 
 		board[i][j] = '#' // mark visited
 
+		if nextNode.IsEndOfAWord {
+			found[string(current)] = string(current)
+		}
+
 		fmt.Println("current: ->", string(current))
-		find(i, j+1, node, current)
-		find(i, j-1, node, current)
-		find(i+1, j, node, current)
-		find(i-1, j, node, current)
+		find(i, j+1, node.Next[letter], current)
+		find(i, j-1, node.Next[letter], current)
+		find(i+1, j, node.Next[letter], current)
+		find(i-1, j, node.Next[letter], current)
 
 		board[i][j] = temp
 		current = current[:len(current)-1]

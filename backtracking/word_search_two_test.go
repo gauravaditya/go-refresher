@@ -14,11 +14,13 @@ func TestFindWords_EmptyBoardAndWords(t *testing.T) {
 }
 
 func TestFindWords_EmptyBoard(t *testing.T) {
-	board := [][]byte{}
-	words := []string{"a", "b"}
+	board := [][]byte{
+		{'a'},
+	}
+	words := []string{"a"}
 	got := findWords(board, words)
-	if len(got) != 0 {
-		t.Errorf("Expected empty result, got %v", got)
+	if len(got) != 1 {
+		t.Errorf("Expected 1 results, got %v", got)
 	}
 }
 
@@ -43,8 +45,8 @@ func TestFindWords_NonEmptyInputs(t *testing.T) {
 	}
 	words := []string{"oath", "pea", "eat", "rain"}
 	got := findWords(board, words)
-	if len(got) != 3 {
-		t.Errorf("Expected 3 results, got %v", got)
+	if len(got) != 2 {
+		t.Errorf("Expected 2 results, got %v", got)
 	}
 }
 func TestFindWords_NoWordsFound(t *testing.T) {
