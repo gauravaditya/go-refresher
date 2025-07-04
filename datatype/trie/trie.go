@@ -1,5 +1,25 @@
 package trie
 
+type Trie struct {
+	root *Node
+}
+
+func NewTrie() *Trie {
+	return &Trie{root: New()}
+}
+
+func (t *Trie) Insert(word string) {
+	t.root.Insert(word)
+}
+
+func (t *Trie) Search(word string) bool {
+	return t.root.Search(word)
+}
+
+func (t *Trie) StartsWith(prefix string) bool {
+	return t.root.StartsWith(prefix)
+}
+
 type Node struct {
 	Next         map[rune]*Node
 	IsEndOfAWord bool
