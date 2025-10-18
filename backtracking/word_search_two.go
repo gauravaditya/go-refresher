@@ -3,7 +3,7 @@ package backtracking
 import (
 	"fmt"
 	"maps"
-	"practise-go/datatype/trie"
+	"practise-go/trie"
 	"slices"
 )
 
