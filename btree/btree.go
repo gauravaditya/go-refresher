@@ -2,7 +2,7 @@ package btree
 
 import (
 	"fmt"
-	"practise-go/datatype/stack"
+	"practise-go/stack"
 )
 
 type Node struct {
