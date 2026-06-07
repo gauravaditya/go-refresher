@@ -1,0 +1,1 @@
+Without using sync.WaitGroup, implement a function that waits for 5 goroutines to complete.
